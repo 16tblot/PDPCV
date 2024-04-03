@@ -6,6 +6,9 @@ Objectifs principaux :
     Développement de l'Application Mobile :
     L'objectif principal est de développer une application mobile intuitive permettant la communication entre plusieurs utilisateurs. Les fonctionnalités clés doivent être développées selon les spécifications du projet (c.f cahier des charges).
 
+    ### prototype simple interface utilisateur kotlin en vues (xml)
+    [proto_gui_xml](https://github.com/16tblot/PDPCV/tree/application/proto_gui_xml)
+
     Requêtes vers le Certificat d'Authentification :
     Les interactions avec le certificat d'authentification doivent être sécurisées et fiables. Cela implique la mise en place de mécanismes d'authentification robustes pour vérifier l'identité des utilisateurs autorisés et garantir que seules les requêtes légitimes sont traitées.
     
