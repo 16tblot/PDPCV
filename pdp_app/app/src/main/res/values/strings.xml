@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">ChatVoiture</string>
+
+    <!-- Auteur -->
+    <string name="author">by</string>
+    <string name="lfavre">Leo Favre</string>
+    <string name="tblot">Thomas Blot</string>
+    <string name="cdrezen">Corentin Drezen</string>
+    <string name="mlari">Mohamed Larinouna</string>
+    <string name="mgueye">Mouhamadou Mensour Gueye</string>
+
+    <!-- Signup Page-->
+    <string name="signup">Signup</string>
+    <string name="signup_username">Username</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_button">SIGNUP</string>
+    <string name="signup_redirect">Already registered ? Login</string>
+
+    <!-- Login Page-->
+    <string name="login">Login</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">LOGIN</string>
+    <string name="login_redirect">Not yet registered ? Signup</string>
+
+
+</resources>
