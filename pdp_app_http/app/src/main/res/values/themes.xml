@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ChatVoiture" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.ChatVoiture" parent="Base.Theme.ChatVoiture" />
+
+    <!-- Créer le composant texte par défaut -->
+    <style name="DefautTextStyle">
+        <item name="android:textColor">@color/lightGrey</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/scriptco</item>
+    </style>
+
+    <!-- Créer le composant sous titre par défaut -->
+    <style name="SubtitleTextStyle" parent="DefautTextStyle">
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
+
+    <!-- Créer le composant titre par défaut -->
+    <style name="TitleTextStyle" parent="SubtitleTextStyle">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- Créer le composant gros titre -->
+    <style name="HugeTitleTextStyle" parent="TitleTextStyle">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+</resources>
