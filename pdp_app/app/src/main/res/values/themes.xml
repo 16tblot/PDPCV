@@ -9,20 +9,26 @@
 
     <!-- Créer le composant texte par défaut -->
     <style name="DefautTextStyle">
-        <item name="android:textColor">@color/lightGrey</item>
+        <item name="android:textColor">@color/darkGrey</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/scriptco</item>
     </style>
 
     <!-- Créer le composant sous titre par défaut -->
     <style name="SubtitleTextStyle" parent="DefautTextStyle">
-        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:textColor">@color/lightGrey</item>
     </style>
 
     <!-- Créer le composant titre par défaut -->
     <style name="TitleTextStyle" parent="SubtitleTextStyle">
         <item name="android:textColor">@color/purple</item>
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="ButtonTextStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/scriptco</item>
     </style>
 
     <!-- Créer le composant gros titre -->

@@ -2,6 +2,7 @@
 #testserver:
 **.pyc
 *.pyc
+**/*.pyc
 
 #android
 

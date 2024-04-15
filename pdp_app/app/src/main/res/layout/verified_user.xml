@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/verify_app_name"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/verifyTextView"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/search_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_app_name" />
+
+    <EditText
+        android:id="@+id/verifiedImmatriculation"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:gravity="center"
+        android:background="@drawable/edittext_border"
+        android:hint="@string/search_default_imatriculation"
+        android:padding="@dimen/default_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyTextView" />
+
+    <Button
+        android:id="@+id/verifySendImmatriculation"
+        style="@style/ButtonTextStyle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:text="@string/search_button_imatriculation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifiedImmatriculation"/>
+
+
+
+
+    <TextView
+        android:id="@+id/verifyTextReceiving"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_margin"
+        android:text="@string/verified_sending_message"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifySendImmatriculation" />
+
+    <Button
+        android:id="@+id/verifyButtonReceiving"
+        style="@style/ButtonTextStyle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:text="@string/verified_default_sending_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyTextReceiving" />
+
+
+    <TextView
+        android:id="@+id/verifyTextSending"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_margin"
+        android:text="@string/verified_receiving_message"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyButtonReceiving"/>
+
+    <Button
+        android:id="@+id/verifyButtonSending"
+        style="@style/ButtonTextStyle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:text="@string/verified_default_receiving_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyTextSending" />
+
+    <include
+        android:id="@+id/low_pages"
+        layout="@layout/low_pages"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

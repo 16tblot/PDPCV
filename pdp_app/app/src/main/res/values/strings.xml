@@ -23,5 +23,20 @@
     <string name="login_button">LOGIN</string>
     <string name="login_redirect">Not yet registered ? Signup</string>
 
+    <!-- Search page -->
+    <string name="search_desc">Tu as rencontré quelqu\'un ?\n Contact la !</string>
+    <string name="search_default_imatriculation">AB-678-CD</string>
+    <string name="search_button_imatriculation">Send!</string>
+
+    <!-- Verified page -->
+    <string name="verified_sending_message">Vos demandes en attentes</string>
+    <string name="verified_default_sending_message">Pas de demande envoyé...</string>
+    <string name="verified_receiving_message">Ils vous ont contacté</string>
+    <string name="verified_default_receiving_message">Pas de demande reçu...</string>
+    <string name="social_network">Suivez nous sur les réseaux pour être tenu informé des prochaines mises à jours !</string>
+
+    <!-- Unverified page -->
+    <string name="unverified_desc">Tu n\'es pas encore certifié ?\nEnvoie nous tes documents pour utiliser l\'application !\nAppuie sur ce boutton !</string>
+    <string name="unverified_button">Envoier tes documents</string>
 
 </resources>
