@@ -1,4 +1,9 @@
 **/.DS_Store
+#testserver:
+**.pyc
+*.pyc
+
+#android
 
 #cf https://github.com/github/gitignore/blob/main/Android.gitignore
 

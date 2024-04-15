@@ -11,7 +11,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
 import okio.IOException
-import ru.gildor.coroutines.okhttp.await
 import java.io.File
 class HttpClientOk
 {

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6u*gdgx-o&as1#kgj5k6n%qv(k#t7ba!ay5**pykq#n@nnadaf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["caripoulet.local", "192.168.1.145"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

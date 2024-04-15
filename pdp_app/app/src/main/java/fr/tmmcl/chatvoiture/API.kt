@@ -2,7 +2,7 @@ package fr.tmmcl.chatvoiture
 
 object API
 {
-    public val baseUrl = "http://192.168.1.145:8000/app/"//http://caripoulet.local:8000/app/"
+    public val baseUrl = "http://192.168.28.174:8000/app/"//http://192.168.1.145:8000/app/"//http://caripoulet.local:8000/app/"
     enum class requests(val str: String) {
         login("login"),
         signup("signup"),
