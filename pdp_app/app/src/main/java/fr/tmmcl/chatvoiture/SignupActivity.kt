@@ -16,8 +16,6 @@ class SignupActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivitySignupBinding
-    //private val client = OkHttpClient()
-    //private val url = "https://chatvoiture.com/"
     private val httpClient = HttpClientOk();
     private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler;
 
@@ -34,7 +32,7 @@ class SignupActivity : AppCompatActivity() {
 
         binding.signupButton.setOnClickListener{
             val signupUsername = binding.signupUsername.text.toString()
-            val signupPassword = Hash256.hashPassword(binding.signupPassword.text.toString())
+            val signupPassword = binding.signupPassword.text.toString()//Hash256.hashPassword(binding.signupPassword.text.toString())
             //signupdatabase(signupUsername, signupPassword)
             signuphttp(signupUsername, signupPassword)
         }

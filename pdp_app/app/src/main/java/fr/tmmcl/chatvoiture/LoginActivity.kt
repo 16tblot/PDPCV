@@ -16,8 +16,6 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler;
-    //private val client = OkHttpClient()
-    //private val url = "https://chatvoiture.com/"
     private val httpClient = HttpClientOk();
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener{
             val loginUsername = binding.loginUsername.text.toString()
-            val loginPassword = Hash256.hashPassword(binding.loginPassword.text.toString())
+            val loginPassword = binding.loginPassword.text.toString()//Hash256.hashPassword(binding.loginPassword.text.toString())
             //logindatabase(loginUsername, loginPassword)
             loginhttp(loginUsername, loginPassword);
         }
@@ -72,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch()
         {
-            var logedIn = false;
+            var token: String? = null;
 
             //thread io :
 
@@ -80,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
             {
                 try
                 {
-                    logedIn = httpClient.login(username, password);
+                    token = httpClient.login(username, password);
                 }
                 catch (e: IOException) {
                     println(e.toString())
@@ -89,11 +87,18 @@ class LoginActivity : AppCompatActivity() {
 
             //thread main/ui :
 
-            if (logedIn) {
+            if (token != null)
+            {
                 Toast.makeText(ctx, "Login Successful", Toast.LENGTH_LONG).show()
                 val intent = Intent(ctx, MainActivity::class.java)
+
+                //TODO: enregistrer le token mais pas en clair
+                API.userToken = token;
+
                 startActivity(intent)
                 finish()
+
+
             } else {
                 Toast.makeText(ctx, "Login Failed", Toast.LENGTH_LONG).show()
             }

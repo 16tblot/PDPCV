@@ -1,11 +1,13 @@
 package fr.tmmcl.chatvoiture
 
+import kotlinx.serialization.Serializable
+
 object API
 {
-    public val baseUrl = "http://192.168.28.174:8000/app/"//http://192.168.1.145:8000/app/"https://thomas-blot.emi.u-bordeaux.fr"
+    public val baseUrl = "https://thomas-blot.emi.u-bordeaux.fr/flask/"
     enum class requests(val str: String) {
         login("login"),
-        signup("signup"),
+        signup("register"),
         set_car_id("set_car_id"),
         contact_car("contact_car")
     }
@@ -14,4 +16,9 @@ object API
     {
         return "$baseUrl$request";
     }
+
+    @Serializable
+    data class Credentials(val username: String, val password: String)
+
+    public var userToken: String? = null;
 }

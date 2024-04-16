@@ -1,68 +1,118 @@
 package fr.tmmcl.chatvoiture;
 
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient;
-import okhttp3.FormBody
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.Request;
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import okio.IOException
+import okio.Buffer
 import java.io.File
+import java.io.IOException
+
+
 class HttpClientOk
 {
+    private val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull();
+
     private var _client = OkHttpClient();
+
 
     //form/request-body POST
     //ref: https://square.github.io/okhttp/recipes/#posting-form-parameters-kt-java
     private suspend fun post(body: RequestBody, url: String) : Response {
+
         val request = Request.Builder()
             .url(url)
             .post(body)
             .build()
 
-        val response = _client.newCall(request).execute();//-.await();
+        //dbg
+        println(request);
 
-        println(response.body!!.string())//
+        try
+        {
+            println(requestBodyToString(request.body!!))
+        }
+        catch (e: IOException)
+        {
+            println(e)
+        }
+        //
+
+        val response = _client.newCall(request).execute();//-.await();
 
         return response;
     }
 
-    suspend fun signup(username: String, password: String) : Boolean {
-        val formBody = FormBody.Builder()
-            .add(username, Hash256.hashPassword(password))
-            .build()
+    //debug:
+    private fun requestBodyToString(requestBody: RequestBody): String {
+        val buffer = Buffer()
+        requestBody.writeTo(buffer)
+        return buffer.readUtf8()
+    }
 
-        val response = post(formBody, API.getUrl(API.requests.signup.str))
+    suspend fun signup(username: String, password: String) : Boolean
+    {
+        val json = Json.encodeToString(API.Credentials(username.trim(), password));
+        val body = json.toRequestBody(JSON);
+
+        val response = post(body, API.getUrl(API.requests.signup.str))
 
         //à modifier selon la reponse attendu si on doit lire le corps de la reponse :
 
         if (!response.isSuccessful)
         {
-            println("signup failed $response");
+            println("Signup failed.\n$response");
             return false;
         };
-        response.body?.close();
+
+        //dbg
+        println(response);
+        println(response.body!!.string())//(on peut faire response.body!!.string() qu'une fois par contre apparement https://stackoverflow.com/a/58097630)
+        //
+
+        response.close();
+
         return  true;
     }
-    suspend fun login(username: String, password: String) : Boolean {
-        val formBody = FormBody.Builder()
-            .add(username, Hash256.hashPassword(password))
-            .build()
+    suspend fun login(username: String, password: String) : String? //String? : return string or null
+    {
+        val json = Json.encodeToString(API.Credentials(username.trim(), password));
+        val reqBody = json.toRequestBody(JSON);
 
-        val response = post(formBody, API.getUrl(API.requests.login.str))
+        val response = post(reqBody, API.getUrl(API.requests.login.str))
 
         //à modifier selon la reponse attendu on veut peut etre un token à réutiliser :
 
         if (!response.isSuccessful)
         {
-            println("login failed $response");
-            return false;
+            if(response.code == 401)
+            {
+                println("Correct login but user not validated.\n$response");
+            }
+            else println("Login failed.\n$response");
+
+            return null;
         };
-        return  true;
+
+        val respBody = response.body!!.string() //(on peut faire response.body!!.string() qu'une fois par contre apparement)
+
+        //dbg
+        println(response);
+        println(respBody)
+        //
+
+        response.close();
+
+        //TODO:  parser le token et le return
+
+        return  respBody;
     }
 
     // à tester

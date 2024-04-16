@@ -6,22 +6,20 @@ Objectifs principaux :
 ## Développement de l'Application Mobile :
 L'objectif principal est de développer une application mobile intuitive permettant la communication entre plusieurs utilisateurs. Les fonctionnalités clés doivent être développées selon les spécifications du projet (c.f cahier des charges).
 
-### prototype d'autentification de compte utilisant soit Retrofit soit OkHttp pour les requetes à un serveur de test (Django):
-[pdp_app_http](https://github.com/16tblot/PDPCV/tree/application/pdp_app_http)
+### prototype d'autentification de compte utilisant OkHttp pour les requetes à un [serveur](https://github.com/16tblot/PDPCV/tree/Infra/server):
+[pdp_app](https://github.com/16tblot/PDPCV/tree/application/pdp_app)
 
-#### Lancer testserver avec:
+#### credentials possibles:
+
+```test:test``` Utilisateur non verifié
+
+```test2:test``` Utilisateur verifié
+
+#### testserver (obsolète):
 
 ```python manage.py runserver 0.0.0.0:8000```
 
-#### Dans ```API.kt```, remplacer ```192.168.1.145``` par l'adresse IP du serveur.
-
-
-### prototype d'autentification de compte utilisant SQLite pour les requetes à une base de donnée locale:
-[pdp_app](https://github.com/16tblot/PDPCV/tree/application/pdp_app)
-
-
-### prototype simple d'interface utilisateur en vues (kotlin+XML) :
-[proto_gui_xml](https://github.com/16tblot/PDPCV/tree/application/proto_gui_xml)
+##### Dans ```API.kt```, asigner à ```baseUrl``` l'adresse IP locale du serveur.
 
 
 ## Requêtes vers le Certificat d'Authentification :
