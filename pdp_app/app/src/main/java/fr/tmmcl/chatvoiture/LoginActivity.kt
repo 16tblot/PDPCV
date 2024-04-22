@@ -10,13 +10,12 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler;
-    private val httpClient = HttpClientOk();
+    private val httpClient = HttpClient();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener{
             val loginUsername = binding.loginUsername.text.toString()
-            val loginPassword = binding.loginPassword.text.toString()//Hash256.hashPassword(binding.loginPassword.text.toString())
-            //logindatabase(loginUsername, loginPassword)
+            val loginPassword = binding.loginPassword.text.toString()
             loginhttp(loginUsername, loginPassword);
         }
 
@@ -43,108 +41,42 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    private fun logindatabase(username: String, password: String){
-//        val getUrl = url + "?username=" + username +",password=" + password
-//        val request = Request.Builder()
-//            .url(getUrl)
-//            .build()
-//
-//        client.newCall(request).execute().use { response ->
-//            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-//
-//            val responseBody = response.body?.string()
-//            if (responseBody.isNullOrEmpty()){
-//                Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
-//            } else {
-//                Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
-
     private fun loginhttp(username: String, password: String)
     {
         val ctx = this.baseContext;
 
+        //coroutine
         lifecycleScope.launch()
         {
-            var token: String? = null;
+            var response : API.LoginResponse? = null;
 
-            //thread io :
-
+            //thread io:
             withContext(Dispatchers.IO + coroutineExceptionHandler)
             {
-                try
-                {
-                    token = httpClient.login(username, password);
-                }
-                catch (e: IOException) {
-                    println(e.toString())
-                }
+                //on utilise le thread 'io' car on ne veut pas bloquer le thread de l'ui
+                response = httpClient.login(username, password);
             }
 
             //thread main/ui :
 
-            if (token != null)
+            if (response == null)
             {
-                Toast.makeText(ctx, "Login Successful", Toast.LENGTH_LONG).show()
-                val intent = Intent(ctx, MainActivity::class.java)
-
-                //TODO: enregistrer le token mais pas en clair
-                API.userToken = token;
-
-                startActivity(intent)
-                finish()
-
-
-            } else {
-                Toast.makeText(ctx, "Login Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(ctx, "Login Failed", Toast.LENGTH_LONG).show();
+                return@launch;//return (depuis coroutine).
             }
-        }
-    }
 
-        /*
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var httpClient: HttpClientOk
-    private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler
+            //TODO: enregistrer le token mais pas en clair
+            API.userToken = response!!.token;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            Toast.makeText(ctx, "Login Successful", Toast.LENGTH_LONG).show()
 
-        databaseHelper = DatabaseHelper(this)
-        httpClient = HttpClientOk()
-        coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
-            throwable.printStackTrace()
-        }
+            val nextActivity: Intent;
 
-        binding.loginButton.setOnClickListener{
-            val loginUsername = binding.loginUsername.text.toString()
-            val loginPassword = binding.loginUsername.text.toString()
-            logindatabase(loginUsername, loginPassword)
-            //loginhttp(loginUsername, loginPassword, HttpImpl.OKHTTP)
-        }
+            if(API.isUserCertified(response!!)) nextActivity = Intent(ctx, FormActivity::class.java)
+            else nextActivity = Intent(ctx, UnverifiedUserActivity::class.java)
 
-        binding.signupRedirect.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
-            startActivity(intent)
+            startActivity(nextActivity)
             finish()
         }
     }
-
-    private fun logindatabase(username: String, password: String){
-        val userExists = databaseHelper.readUser(username, password)
-        if(userExists){
-            Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
-        }
-    }*/
 }

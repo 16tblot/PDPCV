@@ -1,0 +1,124 @@
+package fr.tmmcl.chatvoiture;
+
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import okio.Buffer
+
+
+class HttpClient
+{
+    private val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull();
+    private final val _client = OkHttpClient();
+
+    //form/request-body POST
+    //ref: https://square.github.io/okhttp/recipes/#posting-form-parameters-kt-java
+    private fun post(body: RequestBody, url: String) : Response? {
+
+        val request = Request.Builder()
+            .url(url)
+            .post(body)
+            .build()
+
+        var response: Response? = null;
+
+        try
+        {
+            log(requestBodyToString(request.body!!));//dbg
+            response = _client.newCall(request).execute();
+        }
+        catch (e: Exception) {
+            log(e.toString())
+        }
+
+        return response;
+    }
+
+    //debug:
+    private fun requestBodyToString(requestBody: RequestBody): String {
+        val buffer = Buffer()
+        requestBody.writeTo(buffer)
+        return buffer.readUtf8()
+    }
+
+    fun signup(username: String, password: String) : Boolean
+    {
+        val json = Json.encodeToString(API.Credentials(username.trim(), password));
+        val body = json.toRequestBody(JSON);
+
+        val response = post(body, API.getUrl(API.requests.signup.str)) ?: return false;
+
+        //à modifier si on doit lire le corps de la reponse :
+
+        if (!response.isSuccessful)
+        {
+            log("Signup failed.\n$response");
+            return false;
+        };
+
+        response.close();
+
+        return  true;
+    }
+    fun login(username: String, password: String) : API.LoginResponse? //String? : return string or null
+    {
+        val json = Json.encodeToString(API.Credentials(username.trim(), password));
+        val reqBody = json.toRequestBody(JSON);
+
+        val response = post(reqBody, API.getUrl(API.requests.login.str)) ?: return null;
+
+        if (!response.isSuccessful) return null;
+
+        val respBody = response.body!!.string() //(on peut faire response.body!!.string() qu'une fois par contre apparement)
+
+        //dbg
+        log(response);
+        log(respBody);
+        //
+
+        val respParsed : API.LoginResponse;
+
+        try
+        {
+            respParsed = Json.decodeFromString<API.LoginResponse>(respBody);
+        }
+        catch (e: Exception)
+        {
+            //le parsing peut echouer si l'API est mise à jour et la structure de la reponse differe
+            log(e);
+            return null;
+        }
+
+        //dbg
+        log(respParsed.message);
+        log(respParsed.token)
+        //
+
+        response.close();
+
+        return  respParsed;
+    }
+
+    fun updateUserStrings(token: String, immatriculation: String, phone: String) : Boolean
+    {
+        val json = Json.encodeToString(API.UserDataReq(token, immatriculation, phone));
+        val reqBody = json.toRequestBody(JSON);
+
+        val response = post(reqBody, API.getUrl(API.requests.update_userdata.str)) ?: return false;
+
+
+        //dbg
+        val respBody = response.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        return response.isSuccessful;//only check if response code indicates success
+    }
+}

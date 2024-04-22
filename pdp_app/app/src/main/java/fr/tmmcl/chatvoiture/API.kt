@@ -4,12 +4,15 @@ import kotlinx.serialization.Serializable
 
 object API
 {
+    public var userToken: String? = null;
     public val baseUrl = "https://thomas-blot.emi.u-bordeaux.fr/flask/"
     enum class requests(val str: String) {
         login("login"),
         signup("register"),
-        set_car_id("set_car_id"),
-        contact_car("contact_car")
+        update_userdata("update"),
+        send_car_id("send_car_id"),
+        contact_car("contact_car"),
+        delete_account("delete")
     }
 
     fun getUrl(request: String) : String
@@ -17,8 +20,26 @@ object API
         return "$baseUrl$request";
     }
 
+    //login/signup:
     @Serializable
     data class Credentials(val username: String, val password: String)
+    @Serializable
+    data class LoginResponse(val message: String, val token: String)
+    //(signup not parsed, success=HTTP_OK)
 
-    public var userToken: String? = null;
+    //if user logs in, server responds "Login successful" or "You are not certified"
+    fun isUserCertified(response: LoginResponse): Boolean
+    {
+        return !response.message.contains("not certified");
+    }
+
+    //update/delete:
+    @Serializable
+    data class UserDataReq(val token: String, val immatriculation: String, val phone: String)
+    @Serializable
+    data class UserDeleteReq(val token: String)
+
+
+    @Serializable
+    data class CommonResponse(val message: String)
 }

@@ -1,33 +1,21 @@
 package fr.tmmcl.chatvoiture
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import fr.tmmcl.chatvoiture.databinding.ActivityLoginBinding
 import fr.tmmcl.chatvoiture.databinding.FormBinding
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.InputStream
 
 class FormActivity : AppCompatActivity() {
 
     private lateinit var binding: FormBinding
+    private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler;
+    private val httpClient = HttpClient();
+
     /*private var identiteImageUri: Uri? = null
 
     companion object {
@@ -43,6 +31,10 @@ class FormActivity : AppCompatActivity() {
 
         binding = FormBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+            throwable.printStackTrace()
+        }
 
         // Récupérez l'username du user donnée lors de la redirection depuis UnverifiedActivity
         val username = intent.getStringExtra("username")
@@ -82,7 +74,7 @@ class FormActivity : AppCompatActivity() {
 
             val identite = "image"
             val greyCard = "image"
-            formhtpp(username, phone, immatriculation, identite, greyCard)
+            formhttp(immatriculation, phone, identite, greyCard)
         }
 
         // Bouton pour prendre une photo
@@ -94,34 +86,26 @@ class FormActivity : AppCompatActivity() {
     }
 
 
-    private fun formhtpp(username:String, phone:String, immatriculation:String, identite:String, greyCard:String) {
-        /*val ctx = this.baseContext;
+    private fun formhttp(immatriculation:String, phone:String, identite:String, greyCard:String) {
+        val ctx = this.baseContext;
 
         lifecycleScope.launch()
         {
-            var logedIn = false;
+            var success = false;
 
             //thread io :
-
             withContext(Dispatchers.IO + coroutineExceptionHandler)
             {
-                try {
-                    logedIn = httpClient.login(username, password);
-                } catch (e: IOException) {
-                    println(e.toString())
-                }
+                success = httpClient.updateUserStrings(API.userToken!!, immatriculation, phone)
             }
 
             //thread main/ui :
 
-            if (logedIn) {
-                Toast.makeText(ctx, "Login Successful", Toast.LENGTH_LONG).show()
-                val intent = Intent(ctx, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+            if (success) {
+                Toast.makeText(ctx, "User data update successful", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(ctx, "Login Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(ctx, "User data update failed", Toast.LENGTH_LONG).show()
             }
-        }*/
+        }
     }
 }
