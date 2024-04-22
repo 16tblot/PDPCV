@@ -25,10 +25,16 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+    <!-- Style Button -->
     <style name="ButtonTextStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">@font/scriptco</item>
+    </style>
+
+    <!-- Créer le composant bas de page -->
+    <style name="FootTextStyle" parent="DefautTextStyle">
+        <item name="android:textSize">10sp</item>
     </style>
 
     <!-- Créer le composant gros titre -->

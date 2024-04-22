@@ -2,7 +2,9 @@
 <resources>
     <dimen name="short_margin">10dp</dimen>
     <dimen name="default_margin">20dp</dimen>
-    <dimen name="default_padding">12dp</dimen>
     <dimen name="medium_margin">25dp</dimen>
     <dimen name="big_margin">50dp</dimen>
+
+    <dimen name="default_padding">12dp</dimen>
+    <dimen name="short_padding">10dp</dimen>
 </resources>

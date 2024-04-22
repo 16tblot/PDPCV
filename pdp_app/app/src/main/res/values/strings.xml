@@ -39,4 +39,16 @@
     <string name="unverified_desc">Tu n\'es pas encore certifié ?\nEnvoie nous tes documents pour utiliser l\'application !\nAppuie sur ce boutton !</string>
     <string name="unverified_button">Envoier tes documents</string>
 
+    <!-- Form page -->
+    <string name="form_title">Mise à jour des données du compte</string>
+    <string name="form_message_phone">Numéro de téléphone</string>
+    <string name="form_text_phone">+33 6 12 34 56 78</string>
+    <string name="form_message_immatriculation">Numéro de plaque d\'immatriculation</string>
+    <string name="form_text_immatriculation">AB-123-CD</string>
+    <string name="form_message_identite">Document d\'identité</string>
+    <string name="form_message_grey_card">Carte grise</string>
+    <string name="form_button_take_picture">Prendre une photo</string>
+    <string name="form_button_pick_document">Sélectionner un document</string>
+    <string name="form_button">Envoyé les données</string>
+
 </resources>
