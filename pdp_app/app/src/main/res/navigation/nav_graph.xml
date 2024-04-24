@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/LoginFragment">
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.Login"
+        android:label=""
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_LoginFragment_to_SignupFragment"
+            app:destination="@id/SignupFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_LoginFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignupFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.Signup"
+        android:label=""
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_SignupFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.Main"
+        android:label=""
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_MainFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_FormFragment"
+            app:destination="@id/FormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FormFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.Form"
+        android:label=""
+        tools:layout="@layout/fragment_form">
+        <action
+            android:id="@+id/action_FormFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
+</navigation>

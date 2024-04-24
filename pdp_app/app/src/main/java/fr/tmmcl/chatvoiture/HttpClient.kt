@@ -4,12 +4,14 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.Buffer
+import java.io.InputStream
 
 
 class HttpClient
@@ -120,5 +122,70 @@ class HttpClient
         //
 
         return response.isSuccessful;//only check if response code indicates success
+    }
+
+    fun deleteUser(token: String) : Boolean
+    {
+        val json = Json.encodeToString(API.UserDeleteReq(token));
+        val reqBody = json.toRequestBody(JSON);
+
+        val request = Request.Builder()
+            .url(API.getUrl(API.requests.delete_account.str))
+            .delete(reqBody)//DELETE http request type
+            .build()
+
+        var response: Response? = null;
+
+        try
+        {
+            log(requestBodyToString(request.body!!));//dbg
+            response = _client.newCall(request).execute();
+        }
+        catch (e: Exception) {
+            log(e.toString())
+        }
+
+        //dbg
+        val respBody = response?.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        return response.isSuccessful;//only check if response code indicates success
+    }
+
+    // à retester avec la prochaine maj de l'api
+    //ref: https://square.github.io/okhttp/recipes/#posting-a-multipart-request-kt-java
+    suspend fun uploadFile(token: String, fileName: String,inputStream: InputStream?, requestName: API.requests) : Boolean
+    {
+        val fileBody : RequestBody;
+
+        try
+        {
+            val byteArray = inputStream!!.readBytes();
+            inputStream.close();
+
+            fileBody = byteArray.toRequestBody("*/*".toMediaTypeOrNull(), 0, byteArray.size);
+        }
+        catch (e: Exception)
+        {
+            log("failed to read file or parse as RequestBody $e");
+            return false;
+        }
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("token", token)
+            .addFormDataPart("image", fileName, fileBody)
+            .build()
+
+        val response = post(requestBody, API.getUrl(requestName.str)) ?: return false;
+
+        if (!response.isSuccessful)
+        {
+            log("upload failed $response");
+            return false;
+        };
+        return  true;
     }
 }

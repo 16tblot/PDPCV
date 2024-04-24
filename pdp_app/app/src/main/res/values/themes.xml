@@ -1,11 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChatVoiture" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
 
-    <style name="Theme.ChatVoiture" parent="Base.Theme.ChatVoiture" />
+    <style name="Theme.ChatVoiture" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <!-- Créer le composant texte par défaut -->
     <style name="DefautTextStyle">
@@ -35,6 +31,7 @@
     <!-- Créer le composant bas de page -->
     <style name="FootTextStyle" parent="DefautTextStyle">
         <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- Créer le composant gros titre -->

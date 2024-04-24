@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:id="@+id/main"
+    tools:context=".ui.fragments.Main">
+
+    <TextView
+        android:id="@+id/app_name"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/search_desc"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/search_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+
+    <EditText
+        android:id="@+id/immatriculationTxt"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:gravity="center"
+        android:background="@drawable/edittext_border"
+        android:hint="@string/search_default_imatriculation"
+        android:padding="@dimen/default_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_desc" />
+
+    <Button
+        android:id="@+id/sendImmatriculation"
+        style="@style/ButtonTextStyle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:text="@string/search_button_imatriculation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/immatriculationTxt"/>
+
+    <include
+        android:id="@+id/unverified"
+        layout="@layout/unverified_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendImmatriculation"
+    />
+
+    <include
+        android:enabled="false"
+        android:visibility="gone"
+        android:id="@+id/verified"
+        layout="@layout/verified_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/unverified"
+        />
+
+    <TextView
+        android:id="@+id/deleteAccountBtn"
+        style="@style/FootTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/short_margin"
+        android:text="@string/delete_account"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verified"/>
+
+
+    <include
+        android:id="@+id/low_pages"
+        layout="@layout/low_pages"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
