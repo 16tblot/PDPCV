@@ -98,11 +98,13 @@ class Main : Fragment() {
         log("init unverified components");
 
         binding.unverified.unverifiedButtonReceiving.setOnClickListener {
-            findNavController().navigate(R.id.action_MainFragment_to_FormFragment)
+            val bundle = Bundle().apply {
+                putBoolean("certifiedArg", certifiedArg)
+            }
+            findNavController().navigate(R.id.action_MainFragment_to_FormFragment, bundle)
         }
 
         binding.sendImmatriculation.setOnClickListener {
-            // Code d'une pop-up
             val alertDialogBuilder = AlertDialog.Builder(this.requireContext())
             alertDialogBuilder.setMessage("Vérifie d'abord ton identité avant d'utiliser notre application !")
 
@@ -110,7 +112,6 @@ class Main : Fragment() {
                 dialog.dismiss() // fermeture pop-up
             })
 
-            // Créez et affichez la pop-up
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
         }
@@ -129,6 +130,29 @@ class Main : Fragment() {
 
     private fun initVerifiedComponents()
     {
+        binding.sendImmatriculation.setOnClickListener {
+            val immatriculation = binding.immatriculationTxt.text.toString()
+
+            val ctx = requireContext()
+
+            // Appeler la fonction contactUser dans une coroutine
+            viewModel.viewModelScope.launch {
+                var success = false
+
+                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                withContext(Dispatchers.IO) {
+                    success = viewModel.httpClient.contactUser(API.userToken!!, immatriculation)
+                }
+
+                // Affichage de l'état de la requête dans une AlertDialog
+                val alertDialogBuilder = AlertDialog.Builder(ctx)
+                alertDialogBuilder
+                    .setMessage(if (success) "La demande a été envoyée avec succès." else "Échec de l'envoi de la demande pour la plaque d'immatriculation $immatriculation.")
+                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            }
+        }
 
     }
 }

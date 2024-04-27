@@ -9,11 +9,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
+import fr.tmmcl.chatvoiture.R
 import fr.tmmcl.chatvoiture.databinding.FragmentFormBinding
 import fr.tmmcl.chatvoiture.log
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +26,7 @@ import kotlinx.coroutines.withContext
 class Form : Fragment() {
     private lateinit var binding: FragmentFormBinding
     private val viewModel: AppViewModel by viewModels()
+    private var isCertified: Boolean = false
 
     companion object {
         private const val REQUEST_CODE_PICK_FILE = 1
@@ -39,6 +43,8 @@ class Form : Fragment() {
     ): View?
     {
         super.onCreate(savedInstanceState);
+        isCertified = arguments?.getBoolean("myBooleanVariable", false) ?: false
+
 
         binding = FragmentFormBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
@@ -89,6 +95,9 @@ class Form : Fragment() {
             val immatriculation = binding.formTextImmatriculation.text.toString()
 
             formhttp(immatriculation, phone, identiteImageUri, greyCardImageUri)
+
+            val bundle = bundleOf("certified" to isCertified);
+            findNavController().navigate(R.id.action_FormFragment_to_MainFragment, bundle)
         }
 
         // Bouton pour prendre une photo

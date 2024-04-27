@@ -37,7 +37,7 @@
 
     <!-- Unverified page -->
     <string name="unverified_desc">Tu n\'es pas encore certifié ?\nEnvoie nous tes documents pour utiliser l\'application !\nAppuie sur ce boutton !</string>
-    <string name="unverified_button">Envoier tes documents</string>
+    <string name="unverified_button">Envoyer tes documents</string>
 
     <!-- Form page -->
     <string name="form_title">Mise à jour des données du compte</string>
@@ -49,7 +49,7 @@
     <string name="form_message_grey_card">Carte grise</string>
     <string name="form_button_take_picture">Prendre une photo</string>
     <string name="form_button_pick_document">Sélectionner un document</string>
-    <string name="form_button">Envoyé les données</string>
+    <string name="form_button">Envoyer les données</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

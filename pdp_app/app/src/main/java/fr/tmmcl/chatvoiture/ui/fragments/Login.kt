@@ -57,29 +57,22 @@ class Login : Fragment() {
             var response : API.LoginResponse? = null;
 
             //thread io:
-            withContext(Dispatchers.IO)
-            {
-                //on utilise le thread 'io' car on ne veut pas bloquer le thread de l'ui
+            withContext(Dispatchers.IO){
                 response = viewModel.httpClient.login(username, password);
             }
 
             //thread main/ui :
-
-            if (response == null)
-            {
+            if (response == null){
                 Toast.makeText(ctx, "Login Failed", Toast.LENGTH_LONG).show();
                 return@launch;//return (depuis coroutine).
             }
 
             //TODO: enregistrer le token mais pas en clair
             API.userToken = response!!.token;
-
             Toast.makeText(ctx, "Login Successful", Toast.LENGTH_LONG).show()
 
             val certified = API.isUserCertified(response!!);
-
             viewModel.setUserCertified(certified);
-
             log("userIsCertified=$certified");
 
             val bundle = bundleOf("certified" to certified);

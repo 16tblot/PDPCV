@@ -58,15 +58,14 @@ class HttpClient
 
         //à modifier si on doit lire le corps de la reponse :
 
-        if (!response.isSuccessful)
-        {
+        if (!response.isSuccessful){
             log("Signup failed.\n$response");
             return false;
         };
 
         response.close();
 
-        return  true;
+        return true;
     }
     fun login(username: String, password: String) : API.LoginResponse? //String? : return string or null
     {
@@ -109,7 +108,15 @@ class HttpClient
 
     fun updateUserStrings(token: String, immatriculation: String, phone: String) : Boolean
     {
-        val json = Json.encodeToString(API.UserDataReq(token, immatriculation, phone));
+        val json = if (immatriculation.isNotEmpty() && phone.isNotEmpty()) {
+            Json.encodeToString(API.UserDataReq(token, immatriculation, phone))
+        } else if (immatriculation.isNotEmpty()) {
+            Json.encodeToString(API.UserDataReqIma(token, immatriculation))
+        } else if (phone.isNotEmpty()) {
+            Json.encodeToString(API.UserDataReqPhone(token, phone))
+        } else {
+            return true;
+        }
         val reqBody = json.toRequestBody(JSON);
 
         val response = post(reqBody, API.getUrl(API.requests.update_userdata.str)) ?: return false;
@@ -154,9 +161,36 @@ class HttpClient
         return response.isSuccessful;//only check if response code indicates success
     }
 
+    fun contactUser(sender_token: String, receiver_immatriculation: String) : Boolean
+    {
+        /*{
+            "sender_token": "token",
+            "receiver_immatriculation": "abcd"
+        }*/
+        val json = Json.encodeToString(API.SendRequest(sender_token, receiver_immatriculation))
+        val body = json.toRequestBody(JSON)
+
+        val response = post(body, API.getUrl(API.requests.send_connection_request.str)) ?: return false;
+
+        //dbg
+        val respBody = response.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        if (!response.isSuccessful){
+            log("Friend request failed.\n$response");
+            return false;
+        }
+        response.close();
+        return true;
+    }
+
+
+
     // à retester avec la prochaine maj de l'api
     //ref: https://square.github.io/okhttp/recipes/#posting-a-multipart-request-kt-java
-    suspend fun uploadFile(token: String, fileName: String,inputStream: InputStream?, requestName: API.requests) : Boolean
+    suspend fun uploadFile(token: String, fileName: String, inputStream: InputStream?, requestName: API.requests) : Boolean
     {
         val fileBody : RequestBody;
 

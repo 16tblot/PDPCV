@@ -12,7 +12,8 @@ object API
         update_userdata("update"),
         send_car_id("send_car_id"),
         contact_car("contact_car"),
-        delete_account("delete")
+        delete_account("delete"),
+        send_connection_request("send_connection_request")
     }
 
     fun getUrl(request: String) : String
@@ -36,8 +37,17 @@ object API
     //update/delete:
     @Serializable
     data class UserDataReq(val token: String, val immatriculation: String, val phone: String)
+
+    @Serializable
+    data class UserDataReqIma(val token: String, val immatriculation: String)
+
+    @Serializable
+    data class UserDataReqPhone(val token: String, val phone: String)
     @Serializable
     data class UserDeleteReq(val token: String)
+
+    @Serializable
+    data class SendRequest(val sender_token: String, val receiver_immatriculation: String)
 
 
     @Serializable
