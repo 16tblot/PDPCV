@@ -43,7 +43,7 @@ class Form : Fragment() {
     ): View?
     {
         super.onCreate(savedInstanceState);
-        isCertified = arguments?.getBoolean("myBooleanVariable", false) ?: false
+        isCertified = arguments?.getBoolean("certifiedArg", false) ?: false
 
 
         binding = FragmentFormBinding.inflate(inflater, container, false);
@@ -98,6 +98,7 @@ class Form : Fragment() {
 
             val bundle = bundleOf("certified" to isCertified);
             findNavController().navigate(R.id.action_FormFragment_to_MainFragment, bundle)
+
         }
 
         // Bouton pour prendre une photo

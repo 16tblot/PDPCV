@@ -154,5 +154,12 @@ class Main : Fragment() {
             }
         }
 
+        binding.verified.verifyUpdateData.setOnClickListener(){
+            val bundle = Bundle().apply {
+                putBoolean("certifiedArg", certifiedArg)
+            }
+            findNavController().navigate(R.id.action_MainFragment_to_FormFragment, bundle)
+        }
+
     }
 }

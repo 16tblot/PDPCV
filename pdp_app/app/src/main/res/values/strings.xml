@@ -24,16 +24,22 @@
     <string name="login_redirect">Not yet registered ? Signup</string>
 
     <!-- Search page -->
-    <string name="search_desc">Tu as rencontré quelqu\'un ?\n Contact la !</string>
+    <string name="search_desc">Tu as rencontré quelqu\'un ?\nContacte-le !</string>
     <string name="search_default_imatriculation">AB-678-CD</string>
     <string name="search_button_imatriculation">Send!</string>
 
+
+    <!-- both Verified and Unverified page -->
+    <string name="delete_account">Effacer mes données</string>
+
     <!-- Verified page -->
     <string name="verified_sending_message">Vos demandes en attentes</string>
-    <string name="verified_default_sending_message">Pas de demande envoyé...</string>
+    <string name="verified_default_sending_message">Vos demandes envoyées</string>
     <string name="verified_receiving_message">Ils vous ont contacté</string>
-    <string name="verified_default_receiving_message">Pas de demande reçu...</string>
+    <string name="verified_default_receiving_message">Vos demandes reçues</string>
     <string name="social_network">Suivez nous sur les réseaux pour être tenu informé des prochaines mises à jours !</string>
+    <string name="verified_update_data">Mettre à jour mes données</string>
+
 
     <!-- Unverified page -->
     <string name="unverified_desc">Tu n\'es pas encore certifié ?\nEnvoie nous tes documents pour utiliser l\'application !\nAppuie sur ce boutton !</string>
@@ -60,8 +66,5 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="action_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="delete_account">Effacer mes données</string>
 
 </resources>

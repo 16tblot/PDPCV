@@ -55,5 +55,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/verifyTextSending" />
 
+    <TextView
+        android:id="@+id/verifyUpdateData"
+        style="@style/FootTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:maxLines="1"
+        android:text="@string/verified_update_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyButtonSending" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
