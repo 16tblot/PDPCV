@@ -186,7 +186,6 @@ class Main : Fragment() {
                     }
                     findNavController().navigate(R.id.action_MainFragment_to_FriendRequestFragment, bundle)
 
-
                 }
                 else {
                     val alertDialogBuilder = AlertDialog.Builder(ctx)

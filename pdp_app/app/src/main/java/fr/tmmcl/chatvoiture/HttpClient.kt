@@ -200,6 +200,47 @@ class HttpClient
     }
 
 
+    fun acceptFriendRequest(token: String, target_immatriculation: String) : Boolean {
+        val json = Json.encodeToString(API.AnswerConnection(token, target_immatriculation))
+        val body = json.toRequestBody(JSON)
+
+        val response = post(body, API.getUrl(API.requests.accept_connection.str)) ?: return false;
+
+        //dbg
+        val respBody = response.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        if (!response.isSuccessful){
+            log("Failed to accept friend request.\n$response");
+            return false;
+        }
+        response.close();
+        return true;
+    }
+
+    fun rejectFriendRequest(token: String, target_immatriculation: String) : Boolean {
+        val json = Json.encodeToString(API.AnswerConnection(token, target_immatriculation))
+        val body = json.toRequestBody(JSON)
+
+        val response = post(body, API.getUrl(API.requests.reject_connection.str)) ?: return false;
+
+        //dbg
+        val respBody = response.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        if (!response.isSuccessful){
+            log("Failed to accept friend request.\n$response");
+            return false;
+        }
+        response.close();
+        return true;
+    }
+
+
 
 
 
