@@ -167,7 +167,7 @@ class Main : Fragment() {
         binding.verified.verifyButtonReceiving.setOnClickListener {
             val ctx = requireContext()
             viewModel.viewModelScope.launch {
-                var friends: API.FriendRequests? = null
+                var friends: Array<API.FriendRequest>? = null
 
                 // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
                 withContext(Dispatchers.IO) {
@@ -176,10 +176,9 @@ class Main : Fragment() {
 
                 if (friends != null) {
                     val friendRequestPending = mutableListOf<String>()
-                    for (request in friends!!.receive)
+                    for (request in friends!!)
                         if(request.status.equals("pending"))
-                            for (user in friends!!.receive)
-                                friendRequestPending.add(request.immatriculation)
+                            friendRequestPending.add(request.immatriculation)
 
                     val bundle = Bundle().apply {
                         putStringArrayList("friendRequestPending", ArrayList(friendRequestPending))

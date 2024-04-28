@@ -182,7 +182,7 @@ class HttpClient
         return true;
     }
 
-    fun viewFriendRequest(token: String) : API.FriendRequests? {
+    fun viewFriendRequest(token: String) : Array<API.FriendRequest>? {
         val json = Json.encodeToString(API.ViewFriendRequest(token))
         val body = json.toRequestBody(JSON)
 
@@ -198,7 +198,11 @@ class HttpClient
 
         log(responseBody!!);
 
-        return Json.decodeFromString<API.FriendRequests>(responseBody ?: return null)
+        log("test1")
+        val friendRequests = Json.decodeFromString<API.FriendRequests>(responseBody)
+        log("test2")
+        log(friendRequests.send)
+        return friendRequests.send
     }
 
 

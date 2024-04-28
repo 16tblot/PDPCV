@@ -59,7 +59,7 @@ object API
     @Serializable
     data class FriendRequest(val immatriculation: String, val status: String, val username: String)
     @Serializable
-    data class FriendRequests(val receive: Array<FriendRequest>, val send : Array<FriendRequest>)
+    data class FriendRequests(val receive : Array<FriendRequest>, val send : Array<FriendRequest>)
     //
 
     @Serializable

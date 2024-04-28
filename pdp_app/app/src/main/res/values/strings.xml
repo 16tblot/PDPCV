@@ -70,7 +70,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Strings related to login -->
-    <string name="friend_request">Demande d\'amis :</string>
+    <string name="friend_request">Demandes d\'amis :</string>
 
 
 </resources>
