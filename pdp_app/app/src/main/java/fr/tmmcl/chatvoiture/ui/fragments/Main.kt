@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
 import fr.tmmcl.chatvoiture.R
@@ -177,9 +176,10 @@ class Main : Fragment() {
 
                 if (friends != null) {
                     val friendRequestPending = mutableListOf<String>()
-                    for (request in friends!!.requests)
+                    for (request in friends!!.receive)
                         if(request.status.equals("pending"))
-                            friendRequestPending.add(request.target_immatriculation)
+                            for (user in friends!!.receive)
+                                friendRequestPending.add(request.immatriculation)
 
                     val bundle = Bundle().apply {
                         putStringArrayList("friendRequestPending", ArrayList(friendRequestPending))

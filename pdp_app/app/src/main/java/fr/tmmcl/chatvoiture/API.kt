@@ -55,11 +55,12 @@ object API
     @Serializable
     data class ViewFriendRequest(val token: String)
 
+    //get_all_connections
     @Serializable
-    data class FriendRequest(val target_immatriculation: String, val status: String)
-
+    data class FriendRequest(val immatriculation: String, val status: String, val username: String)
     @Serializable
-    data class FriendRequests(val requests: List<FriendRequest>)
+    data class FriendRequests(val receive: Array<FriendRequest>, val send : Array<FriendRequest>)
+    //
 
     @Serializable
     data class AnswerConnection(val token: String, val target_immatriculation: String)

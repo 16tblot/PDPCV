@@ -196,6 +196,8 @@ class HttpClient
         val responseBody = response.body?.string()
         response.close()
 
+        log(responseBody!!);
+
         return Json.decodeFromString<API.FriendRequests>(responseBody ?: return null)
     }
 
