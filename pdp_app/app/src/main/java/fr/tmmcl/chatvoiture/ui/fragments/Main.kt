@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
 import fr.tmmcl.chatvoiture.R
@@ -30,7 +31,7 @@ class Main : Fragment() {
         viewModel.isUserCertified().observe(this)
         {
             isCertified ->
-            if(isCertified) switchToVerifiedComponents()
+                if(isCertified) switchToVerifiedComponents()
         }
         certifiedArg = arguments?.getBoolean("certified")!!;
     }
@@ -96,7 +97,6 @@ class Main : Fragment() {
     private fun initUnverifiedComponents()
     {
         log("init unverified components");
-
         binding.unverified.unverifiedButtonReceiving.setOnClickListener {
             val bundle = Bundle().apply {
                 putBoolean("certifiedArg", certifiedArg)
@@ -159,6 +159,48 @@ class Main : Fragment() {
                 putBoolean("certifiedArg", certifiedArg)
             }
             findNavController().navigate(R.id.action_MainFragment_to_FormFragment, bundle)
+        }
+
+        binding.verified.verifyButtonFriend.setOnClickListener(){
+
+        }
+
+        binding.verified.verifyButtonReceiving.setOnClickListener {
+            val ctx = requireContext()
+            viewModel.viewModelScope.launch {
+                var friends: API.FriendRequests? = null
+
+                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                withContext(Dispatchers.IO) {
+                    friends = viewModel.httpClient.viewFriendRequest(API.userToken!!)
+                }
+
+                if (friends != null) {
+                    val friendRequestPending = mutableListOf<String>()
+                    for (request in friends!!.requests)
+                        if(request.status.equals("pending"))
+                            friendRequestPending.add(request.target_immatriculation)
+
+                    val bundle = Bundle().apply {
+                        putStringArrayList("friendRequestPending", ArrayList(friendRequestPending))
+                    }
+                    findNavController().navigate(R.id.action_MainFragment_to_FriendRequestFragment, bundle)
+
+
+                }
+                else {
+                    val alertDialogBuilder = AlertDialog.Builder(ctx)
+                    alertDialogBuilder
+                        .setMessage("Échec : pas de demande d'amis en attente.")
+                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                        .create()
+                        .show()
+                }
+            }
+        }
+
+        binding.verified.verifyButtonSending.setOnClickListener(){
+
         }
 
     }

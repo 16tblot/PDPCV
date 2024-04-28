@@ -9,24 +9,45 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/verifyTextReceiving"
+        android:id="@+id/verifyTextFriend"
         style="@style/DefautTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_margin"
-        android:text="@string/verified_sending_message"
+        android:text="@string/verified_friend_message"
+        android:layout_marginTop="@dimen/short_margin"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/verifyButtonFriend"
+        style="@style/ButtonTextStyle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/verified_button_friend_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyTextFriend" />
+
+    <TextView
+        android:id="@+id/verifyTextReceiving"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/verified_receiving_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyButtonFriend" />
+
+    <Button
         android:id="@+id/verifyButtonReceiving"
         style="@style/ButtonTextStyle"
-        android:layout_width="250dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/short_margin"
-        android:text="@string/verified_default_sending_message"
+        android:text="@string/verified_button_sending_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/verifyTextReceiving" />
@@ -37,8 +58,8 @@
         style="@style/DefautTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_margin"
-        android:text="@string/verified_receiving_message"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/verified_sending_message"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,13 +68,14 @@
     <Button
         android:id="@+id/verifyButtonSending"
         style="@style/ButtonTextStyle"
-        android:layout_width="250dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/short_margin"
-        android:text="@string/verified_default_receiving_message"
+        android:text="@string/verified_button_receiving_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/verifyTextSending" />
+
+
 
     <TextView
         android:id="@+id/verifyUpdateData"

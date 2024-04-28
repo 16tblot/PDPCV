@@ -26,17 +26,19 @@
     <!-- Search page -->
     <string name="search_desc">Tu as rencontré quelqu\'un ?\nContacte-le !</string>
     <string name="search_default_imatriculation">AB-678-CD</string>
-    <string name="search_button_imatriculation">Send!</string>
+    <string name="search_button_imatriculation">Envoyer!</string>
 
 
     <!-- both Verified and Unverified page -->
     <string name="delete_account">Effacer mes données</string>
 
     <!-- Verified page -->
-    <string name="verified_sending_message">Vos demandes en attentes</string>
-    <string name="verified_default_sending_message">Vos demandes envoyées</string>
+    <string name="verified_friend_message">Vos rencontres</string>
+    <string name="verified_button_friend_message">Voir</string>
     <string name="verified_receiving_message">Ils vous ont contacté</string>
-    <string name="verified_default_receiving_message">Vos demandes reçues</string>
+    <string name="verified_button_receiving_message">Voir</string>
+    <string name="verified_sending_message">Vos demandes envoyées</string>
+    <string name="verified_button_sending_message">Voir</string>
     <string name="social_network">Suivez nous sur les réseaux pour être tenu informé des prochaines mises à jours !</string>
     <string name="verified_update_data">Mettre à jour mes données</string>
 
@@ -66,5 +68,9 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Strings related to login -->
+    <string name="friend_request">Demande d\'amis :</string>
+
 
 </resources>

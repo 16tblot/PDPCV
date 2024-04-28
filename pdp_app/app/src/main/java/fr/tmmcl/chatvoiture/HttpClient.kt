@@ -163,11 +163,7 @@ class HttpClient
 
     fun contactUser(sender_token: String, receiver_immatriculation: String) : Boolean
     {
-        /*{
-            "sender_token": "token",
-            "receiver_immatriculation": "abcd"
-        }*/
-        val json = Json.encodeToString(API.SendRequest(sender_token, receiver_immatriculation))
+        val json = Json.encodeToString(API.ContactUser(sender_token, receiver_immatriculation))
         val body = json.toRequestBody(JSON)
 
         val response = post(body, API.getUrl(API.requests.send_connection_request.str)) ?: return false;
@@ -185,6 +181,25 @@ class HttpClient
         response.close();
         return true;
     }
+
+    fun viewFriendRequest(token: String) : API.FriendRequests? {
+        val json = Json.encodeToString(API.ViewFriendRequest(token))
+        val body = json.toRequestBody(JSON)
+
+        val response = post(body, API.getUrl(API.requests.get_all_connections.str)) ?: return null
+
+        if (!response.isSuccessful){
+            log("Pas de demande d'amis en attente, va prendre la route!\n$response")
+            return null
+        }
+
+        val responseBody = response.body?.string()
+        response.close()
+
+        return Json.decodeFromString<API.FriendRequests>(responseBody ?: return null)
+    }
+
+
 
 
 

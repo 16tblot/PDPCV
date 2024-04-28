@@ -9,8 +9,7 @@ class AppViewModel : ViewModel()
     val httpClient = HttpClient()
     private val userCertified : MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 
-    fun setUserCertified(value: Boolean)
-    {
+    fun setUserCertified(value: Boolean){
         userCertified.value = value;
     }
     fun isUserCertified(): LiveData<Boolean> {

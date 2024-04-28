@@ -13,7 +13,8 @@ object API
         send_car_id("send_car_id"),
         contact_car("contact_car"),
         delete_account("delete"),
-        send_connection_request("send_connection_request")
+        send_connection_request("send_connection_request"),
+        get_all_connections("get_all_connections")
     }
 
     fun getUrl(request: String) : String
@@ -47,8 +48,16 @@ object API
     data class UserDeleteReq(val token: String)
 
     @Serializable
-    data class SendRequest(val sender_token: String, val receiver_immatriculation: String)
+    data class ContactUser(val sender_token: String, val receiver_immatriculation: String)
 
+    @Serializable
+    data class ViewFriendRequest(val token: String)
+
+    @Serializable
+    data class FriendRequest(val target_immatriculation: String, val status: String)
+
+    @Serializable
+    data class FriendRequests(val requests: List<FriendRequest>)
 
     @Serializable
     data class CommonResponse(val message: String)

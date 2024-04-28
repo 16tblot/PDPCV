@@ -48,7 +48,7 @@
     <Button
         android:id="@+id/sendImmatriculation"
         style="@style/ButtonTextStyle"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/short_margin"
         android:text="@string/search_button_imatriculation"
