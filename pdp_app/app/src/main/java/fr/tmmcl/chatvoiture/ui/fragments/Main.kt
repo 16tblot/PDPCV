@@ -160,23 +160,54 @@ class Main : Fragment() {
             findNavController().navigate(R.id.action_MainFragment_to_FormFragment, bundle)
         }
 
-        binding.verified.verifyButtonFriend.setOnClickListener(){
+        binding.verified.verifyButtonFriend.setOnClickListener() {
+            val ctx = requireContext()
+            viewModel.viewModelScope.launch {
+                var friendRequests: Array<API.FriendRequest>? = null
 
+                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                withContext(Dispatchers.IO) {
+                    friendRequests = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
+                }
+
+                if (friendRequests != null) {
+                    val friendRequestAccept = mutableListOf<String>()
+                    for (request in friendRequests!!)
+                        if (request.status.equals("accepted"))
+                            friendRequestAccept.add(request.immatriculation)
+
+                    val bundle = Bundle().apply {
+                        putStringArrayList("friendRequestAccept", ArrayList(friendRequestAccept))
+                    }
+                    findNavController().navigate(
+                        R.id.action_MainFragment_to_FriendAcceptFragment,
+                        bundle
+                    )
+
+                } else {
+                    val alertDialogBuilder = AlertDialog.Builder(ctx)
+                    alertDialogBuilder
+                        .setMessage("Échec : pas de demande d'amis en attente.")
+                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                        .create()
+                        .show()
+                }
+            }
         }
 
         binding.verified.verifyButtonReceiving.setOnClickListener {
             val ctx = requireContext()
             viewModel.viewModelScope.launch {
-                var friends: Array<API.FriendRequest>? = null
+                var friendRequests: Array<API.FriendRequest>? = null
 
                 // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
                 withContext(Dispatchers.IO) {
-                    friends = viewModel.httpClient.viewFriendRequest(API.userToken!!)
+                    friendRequests = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
                 }
 
-                if (friends != null) {
+                if (friendRequests != null) {
                     val friendRequestPending = mutableListOf<String>()
-                    for (request in friends!!)
+                    for (request in friendRequests!!)
                         if(request.status.equals("pending"))
                             friendRequestPending.add(request.immatriculation)
 

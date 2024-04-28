@@ -182,7 +182,7 @@ class HttpClient
         return true;
     }
 
-    fun viewFriendRequest(token: String) : Array<API.FriendRequest>? {
+    fun viewFriendRequestReceive(token: String) : Array<API.FriendRequest>? {
         val json = Json.encodeToString(API.ViewFriendRequest(token))
         val body = json.toRequestBody(JSON)
 
@@ -198,11 +198,9 @@ class HttpClient
 
         log(responseBody!!);
 
-        log("test1")
         val friendRequests = Json.decodeFromString<API.FriendRequests>(responseBody)
-        log("test2")
-        log(friendRequests.send)
-        return friendRequests.send
+        log(friendRequests.receive)
+        return friendRequests.receive
     }
 
 
@@ -239,14 +237,33 @@ class HttpClient
         //
 
         if (!response.isSuccessful){
-            log("Failed to accept friend request.\n$response");
+            log("Failed to reject friend request.\n$response");
             return false;
         }
         response.close();
         return true;
     }
 
+    fun viewFriendRequestSend(token: String) : Array<API.FriendRequest>? {
+        val json = Json.encodeToString(API.ViewFriendRequest(token))
+        val body = json.toRequestBody(JSON)
 
+        val response = post(body, API.getUrl(API.requests.get_all_connections.str)) ?: return null
+
+        if (!response.isSuccessful){
+            log("Pas de demande d'amis en attente, va prendre la route!\n$response")
+            return null
+        }
+
+        val responseBody = response.body?.string()
+        response.close()
+
+        log(responseBody!!);
+
+        val friendRequests = Json.decodeFromString<API.FriendRequests>(responseBody)
+        log(friendRequests.send)
+        return friendRequests.send
+    }
 
 
 

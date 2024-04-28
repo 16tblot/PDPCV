@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
 import fr.tmmcl.chatvoiture.R
+import fr.tmmcl.chatvoiture.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -45,10 +46,11 @@ class FriendRequestAdapter(private val context: Context, private val friendReque
                 withContext(Dispatchers.IO) {
                     success = viewModel.httpClient.acceptFriendRequest(API.userToken!!, immatriculation)
                 }
+                log(success)
                 // Affichage de l'état de la requête dans une AlertDialog
                 val alertDialogBuilder = AlertDialog.Builder(context)
                 alertDialogBuilder
-                    .setMessage(if (success) "Demande d'ami accepté !" else "Something wrong happened")
+                    .setMessage(if (success) "Demande d'ami acceptée !" else "Something wrong happened")
                     .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
                     .create()
                     .show()
@@ -65,7 +67,7 @@ class FriendRequestAdapter(private val context: Context, private val friendReque
                 // Affichage de l'état de la requête dans une AlertDialog
                 val alertDialogBuilder = AlertDialog.Builder(context)
                 alertDialogBuilder
-                    .setMessage(if (success) "Demande d'ami refusé !" else "Something wrong happened")
+                    .setMessage(if (success) "Demande d'ami refusée !" else "Something wrong happened")
                     .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
                     .create()
                     .show()
