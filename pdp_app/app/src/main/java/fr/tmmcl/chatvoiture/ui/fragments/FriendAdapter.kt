@@ -3,21 +3,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
 import fr.tmmcl.chatvoiture.R
-import fr.tmmcl.chatvoiture.log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class FriendAcceptAdapter(private val context: Context, private val friendRequestAccept: List<String>) : RecyclerView.Adapter<FriendAcceptAdapter.ViewHolder>() {
+class FriendAdapter(private val context: Context, private val friendRequestAccept: List<String>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
     private val viewModel: AppViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(context.applicationContext as Application).create(AppViewModel::class.java)

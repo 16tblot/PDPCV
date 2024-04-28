@@ -72,6 +72,8 @@
     <!-- Friends -->
     <string name="friend_request">Demandes d\'amis :</string>
     <string name="friend_accept">Vos amis :</string>
+    <string name="friend_request_send">Demandes envoyés :</string>
+
 
 
 </resources>

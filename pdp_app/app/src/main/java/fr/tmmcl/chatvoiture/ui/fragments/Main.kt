@@ -161,53 +161,46 @@ class Main : Fragment() {
         }
 
         binding.verified.verifyButtonFriend.setOnClickListener() {
-            val ctx = requireContext()
             viewModel.viewModelScope.launch {
-                var friendRequests: Array<API.FriendRequest>? = null
+                val allFriendRequestAccept = mutableListOf<String>()
+                var friendRequestsReceiveAccept: Array<API.FriendRequest>? = null
+                var friendRequestsSendAccept: Array<API.FriendRequest>? = null
 
                 // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
                 withContext(Dispatchers.IO) {
-                    friendRequests = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
+                    friendRequestsReceiveAccept = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
+                    friendRequestsSendAccept = viewModel.httpClient.viewFriendRequestSend(API.userToken!!)
                 }
 
-                if (friendRequests != null) {
-                    val friendRequestAccept = mutableListOf<String>()
-                    for (request in friendRequests!!)
-                        if (request.status.equals("accepted"))
-                            friendRequestAccept.add(request.immatriculation)
+                for (request in friendRequestsReceiveAccept!!)
+                    if (request.status.equals("accepted"))
+                        allFriendRequestAccept.add(request.immatriculation)
 
-                    val bundle = Bundle().apply {
-                        putStringArrayList("friendRequestAccept", ArrayList(friendRequestAccept))
-                    }
-                    findNavController().navigate(
-                        R.id.action_MainFragment_to_FriendAcceptFragment,
-                        bundle
-                    )
+                for (request in friendRequestsSendAccept!!)
+                    if (request.status.equals("accepted"))
+                        allFriendRequestAccept.add(request.immatriculation)
 
-                } else {
-                    val alertDialogBuilder = AlertDialog.Builder(ctx)
-                    alertDialogBuilder
-                        .setMessage("Échec : pas de demande d'amis en attente.")
-                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                        .create()
-                        .show()
+                val bundle = Bundle().apply {
+                    putStringArrayList("allFriendRequestAccept", ArrayList(allFriendRequestAccept))
                 }
+                findNavController().navigate(
+                    R.id.action_MainFragment_to_FriendAcceptFragment,
+                    bundle
+                )
             }
         }
 
         binding.verified.verifyButtonReceiving.setOnClickListener {
-            val ctx = requireContext()
             viewModel.viewModelScope.launch {
-                var friendRequests: Array<API.FriendRequest>? = null
+                var friendRequestsReceive: Array<API.FriendRequest>? = null
 
                 // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
                 withContext(Dispatchers.IO) {
-                    friendRequests = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
+                    friendRequestsReceive = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
                 }
 
-                if (friendRequests != null) {
                     val friendRequestPending = mutableListOf<String>()
-                    for (request in friendRequests!!)
+                    for (request in friendRequestsReceive!!)
                         if(request.status.equals("pending"))
                             friendRequestPending.add(request.immatriculation)
 
@@ -215,22 +208,28 @@ class Main : Fragment() {
                         putStringArrayList("friendRequestPending", ArrayList(friendRequestPending))
                     }
                     findNavController().navigate(R.id.action_MainFragment_to_FriendRequestFragment, bundle)
-
-                }
-                else {
-                    val alertDialogBuilder = AlertDialog.Builder(ctx)
-                    alertDialogBuilder
-                        .setMessage("Échec : pas de demande d'amis en attente.")
-                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                        .create()
-                        .show()
-                }
             }
         }
 
         binding.verified.verifyButtonSending.setOnClickListener(){
+            viewModel.viewModelScope.launch {
+                var friendRequestsSend: Array<API.FriendRequest>? = null
 
+                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                withContext(Dispatchers.IO) {
+                    friendRequestsSend = viewModel.httpClient.viewFriendRequestSend(API.userToken!!)
+                }
+
+                val friendRequestSendPending = mutableListOf<String>()
+                for (request in friendRequestsSend!!)
+                    if(request.status.equals("pending"))
+                        friendRequestSendPending.add(request.immatriculation)
+
+                val bundle = Bundle().apply {
+                    putStringArrayList("friendRequestSendPending", ArrayList(friendRequestSendPending))
+                }
+                findNavController().navigate(R.id.action_MainFragment_to_FriendRequestSendFragment, bundle)
+            }
         }
-
     }
 }

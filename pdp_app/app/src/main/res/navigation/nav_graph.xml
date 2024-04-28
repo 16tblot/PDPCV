@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_MainFragment_to_FriendAcceptFragment"
             app:destination="@id/FriendAcceptFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_FriendRequestSendFragment"
+            app:destination="@id/FriendRequestSendFragment" />
     </fragment>
 
     <fragment
@@ -73,11 +76,21 @@
 
     <fragment
         android:id="@+id/FriendAcceptFragment"
-        android:name="fr.tmmcl.chatvoiture.ui.fragments.FriendAcceptFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.FriendFragment"
         android:label=""
         tools:layout="@layout/fragment_friend_accept">
         <action
             android:id="@+id/action_FriendAcceptFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FriendRequestSendFragment"
+        android:name="fr.tmmcl.chatvoiture.ui.fragments.FriendRequestSendFragment"
+        android:label=""
+        tools:layout="@layout/fragment_friend_request_send">
+        <action
+            android:id="@+id/action_FriendRequestSendFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
     </fragment>
 
