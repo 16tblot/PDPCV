@@ -11,11 +11,11 @@ import fr.tmmcl.chatvoiture.R
 
 class FriendRequestFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_friend_request, container, false)
+        val view = inflater.inflate(R.layout.fragment_display_friend_request, container, false)
         val friendRequestPending = arguments?.getStringArrayList("friendRequestPending") ?: arrayListOf()
 
         //recuperer le recyclerview
-        val friendRequestRecyclerView = view?.findViewById<RecyclerView>(R.id.friend_request_recyclerview)
+        val friendRequestRecyclerView = view?.findViewById<RecyclerView>(R.id.vertical_recycler_view)
         friendRequestRecyclerView?.adapter = FriendRequestAdapter(this.requireContext(), friendRequestPending)
         return view
     }
