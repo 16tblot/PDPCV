@@ -17,6 +17,7 @@ object API
         get_all_connections("get_all_connections"),
         accept_connection("accept_connection"),
         reject_connection("reject_connection"),
+        delete_connection("delete_connection"),
         get_friendlist("get_friendlist")
     }
 
@@ -54,7 +55,7 @@ object API
     @Serializable
     data class FriendRequest(val immatriculation: String, val status: String, val username: String)
     @Serializable
-    data class FriendRequests(val receive : Array<FriendRequest>, val send : Array<FriendRequest>)
+    data class FriendRequests(val send : Array<FriendRequest>, val receive : Array<FriendRequest>)
     //
 
     @Serializable

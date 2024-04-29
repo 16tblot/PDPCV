@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="120dp"
     android:layout_marginLeft="@dimen/short_margin"
     android:layout_marginRight="@dimen/short_margin"
     android:layout_marginTop="@dimen/short_margin"
@@ -29,39 +29,61 @@
         style="@style/SubtitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Immatriculation :"
         android:layout_marginLeft="@dimen/medium_margin"
-        app:layout_constraintBottom_toTopOf="@+id/view_separation"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Immatriculation :"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_separation_vertical" />
 
     <TextView
         android:id="@+id/friend_accept_ima"
         style="@style/DefautTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AB-123-CD"
         android:layout_marginLeft="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@+id/view_separation"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:text="AB-123-CD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/friend_accept_ima_label" />
 
     <TextView
         android:id="@+id/friend_accept_phone_label"
         style="@style/SubtitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/short_margin"
         android:text="Numéro :"
-        app:layout_constraintBottom_toTopOf="@+id/view_separation"
-        app:layout_constraintStart_toEndOf="@+id/view_separation_vertical" />
+        app:layout_constraintStart_toStartOf="@+id/friend_accept_ima_label"
+        app:layout_constraintTop_toBottomOf="@+id/view_separation" />
 
     <TextView
         android:id="@+id/friend_accept_phone"
         style="@style/DefautTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/short_margin"
         android:text="+33 6 14 19 61 82"
+        app:layout_constraintStart_toStartOf="@+id/friend_accept_phone_label"
+        app:layout_constraintTop_toBottomOf="@+id/friend_accept_phone_label" />
+
+    <TextView
+        android:id="@+id/friend_accept_delete_label"
+        style="@style/DefautTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="@string/friend_accept_delete"
+        app:layout_constraintBottom_toTopOf="@+id/view_separation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view_separation_vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/friend_accept_delete_button"
+        style="@style/ButtonTextStyle"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:text="Supprimer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/friend_accept_delete_label"
+        app:layout_constraintStart_toStartOf="@+id/friend_accept_delete_label"
         app:layout_constraintTop_toBottomOf="@+id/view_separation" />
 
 

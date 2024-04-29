@@ -38,7 +38,22 @@ class FriendRequestSendAdapter(private val context: Context, private val friendR
         val immatriculation = friendRequestPending[position]
         holder.immatriculationTextView.text = immatriculation
         holder.cancelButton.setOnClickListener {
-
+            // Action à effectuer lors de la suppression d'une demande d'ami
+            viewModel.viewModelScope.launch {
+                var success = false
+                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                withContext(Dispatchers.IO) {
+                    success = viewModel.httpClient.deleteFriend(API.userToken!!, immatriculation)
+                }
+                log(success)
+                // Affichage de l'état de la requête dans une AlertDialog
+                val alertDialogBuilder = AlertDialog.Builder(context)
+                alertDialogBuilder
+                    .setMessage(if (success) "Demande d'ami supprimé !" else "Something wrong happened")
+                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            }
         }
     }
 

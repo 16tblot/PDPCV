@@ -243,7 +243,7 @@ class HttpClient
         val response = post(body, API.getUrl(API.requests.get_all_connections.str)) ?: return null
 
         if (!response.isSuccessful){
-            log("Pas de demande d'amis en attente, va prendre la route!\n$response")
+            log("Pas de demande d'amis envoyé en attente, va prendre la route!\n$response")
             return null
         }
 
@@ -267,6 +267,7 @@ class HttpClient
             log("Pas encore d'amis, va prendre la route !\n$response")
             return null
         }
+        log("reponse serveur : $response")
 
         val responseBody = response.body?.string()
         response.close()
@@ -276,6 +277,26 @@ class HttpClient
         val friendResponse = Json.decodeFromString<API.Friend>(responseBody)
         log("return httpclient")
         return friendResponse.friend
+    }
+
+    fun deleteFriend(token: String, target_immatriculation: String) : Boolean {
+        val json = Json.encodeToString(API.AnswerConnection(token, target_immatriculation))
+        val body = json.toRequestBody(JSON)
+
+        val response = post(body, API.getUrl(API.requests.delete_connection.str)) ?: return false;
+
+        //dbg
+        val respBody = response.body!!.string()
+        log(response);
+        log(respBody);
+        //
+
+        if (!response.isSuccessful){
+            log("Failed to delete friend.\n$response");
+            return false;
+        }
+        response.close();
+        return true;
     }
 
 
