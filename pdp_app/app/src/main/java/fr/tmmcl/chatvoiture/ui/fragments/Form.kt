@@ -82,12 +82,12 @@ class Form : Fragment() {
 
             //https://developer.android.com/training/data-storage/shared/photopicker#persist-media-file-access pas forcement besoin de permission non plus
             //pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.SingleMimeType("image/*")))
-            openDocumentId.launch(arrayOf("image/*", "application/pdf"))
+            openDocumentId.launch(arrayOf("image/jpeg"))//*", "application/pdf"))
         }
 
 
         binding.formButtonGreyCard.setOnClickListener {
-            openDocumentCar.launch(arrayOf("image/*", "application/pdf"))
+            openDocumentCar.launch(arrayOf("image/jpeg"))//*", "application/pdf"))
         }
 
         binding.formButton.setOnClickListener {
@@ -135,33 +135,18 @@ class Form : Fragment() {
         }
     }
 
-    //https://stackoverflow.com/a/73630987
-    //https://developer.android.com/training/data-storage/shared/documents-files
-    //"Because the user is involved in selecting the files or directories that your app can access, this mechanism doesn't require any system permissions"
-    /*
-    private fun isPermissionGranted() : Boolean
+
+    private fun formhttp(immatriculation:String, phone:String, identite:Uri?, greyCard:Uri?)
     {
-        return (ContextCompat.checkSelfPermission(this.baseContext, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-    }
-    private fun checkAskPermission() : Boolean
-    {
-        var granted = isPermissionGranted();
-
-        if(!granted)
-        {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_CODE_STORAGE_PERMISSION)
-
-            granted = isPermissionGranted();
-        }
-
-        return granted;
-    }*/
-
-
-    private fun formhttp(immatriculation:String, phone:String, identite:Uri?, greyCard:Uri?) {
         val ctx = this.context;
+        var greyCardData : ByteArray? = null;
+
+        if(greyCard != null)
+        {
+            val inputStream = this.requireContext().contentResolver.openInputStream(greyCard!!)
+            greyCardData = inputStream!!.readBytes();
+            inputStream.close();
+        }
 
         viewModel.viewModelScope.launch()
         {
@@ -170,14 +155,7 @@ class Form : Fragment() {
             //thread io :
             withContext(Dispatchers.IO)
             {
-                success = viewModel.httpClient.updateUserStrings(API.userToken!!, immatriculation, phone);
-
-                //test future 'blob':
-                /*
-                val doc = DocumentFile.fromSingleUri(ctx, identite!!);
-                val inputStream = contentResolver.openInputStream(identite!!);
-                httpClient.uploadFile(API.userToken!!, doc?.name!!, inputStream, API.requests.send_car_id)
-                */
+                success = viewModel.httpClient.updateUser(API.userToken!!, immatriculation, phone, greyCardData);
             }
 
             //thread main/ui :

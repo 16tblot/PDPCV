@@ -106,21 +106,13 @@ class HttpClient
         return  respParsed;
     }
 
-    fun updateUserStrings(token: String, immatriculation: String, phone: String) : Boolean
+    fun updateUser(token: String, immatriculation: String, phone: String, greyCard: ByteArray?) : Boolean
     {
-        val json = if (immatriculation.isNotEmpty() && phone.isNotEmpty()) {
-            Json.encodeToString(API.UserDataReq(token, immatriculation, phone))
-        } else if (immatriculation.isNotEmpty()) {
-            Json.encodeToString(API.UserDataReqIma(token, immatriculation))
-        } else if (phone.isNotEmpty()) {
-            Json.encodeToString(API.UserDataReqPhone(token, phone))
-        } else {
-            return true;
-        }
+        //(kotlin serialisation ignores optional and null/empty args)
+        val json = Json.encodeToString(API.UserDataReq(token, immatriculation, phone, greyCard))
+
         val reqBody = json.toRequestBody(JSON);
-
         val response = post(reqBody, API.getUrl(API.requests.update_userdata.str)) ?: return false;
-
 
         //dbg
         val respBody = response.body!!.string()

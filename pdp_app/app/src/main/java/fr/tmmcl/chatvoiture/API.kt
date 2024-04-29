@@ -38,14 +38,8 @@ object API
     }
 
     //update/delete:
-    @Serializable
-    data class UserDataReq(val token: String, val immatriculation: String, val phone: String)
-
-    @Serializable
-    data class UserDataReqIma(val token: String, val immatriculation: String)
-
-    @Serializable
-    data class UserDataReqPhone(val token: String, val phone: String)
+    @Serializable //kotlin-serialization ignore les champs optionels ou vide
+    data class UserDataReq(val token: String, val immatriculation: String = "", val phone: String = "", val registration : ByteArray? = null)
     @Serializable
     data class UserDeleteReq(val token: String)
 
