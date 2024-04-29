@@ -19,6 +19,8 @@ import fr.tmmcl.chatvoiture.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class Main : Fragment() {
 
@@ -162,33 +164,34 @@ class Main : Fragment() {
 
         binding.verified.verifyButtonFriend.setOnClickListener() {
             viewModel.viewModelScope.launch {
-                val allFriendRequestAccept = mutableListOf<String>()
-                var friendRequestsReceiveAccept: Array<API.FriendRequest>? = null
-                var friendRequestsSendAccept: Array<API.FriendRequest>? = null
+                var friends: List<API.FriendInfo>? = null
 
-                // Utilisation de withContext pour exécuter la requête HTTP de manière asynchrone sur le thread IO
+                // Récupérez la liste d'amis depuis le serveur
                 withContext(Dispatchers.IO) {
-                    friendRequestsReceiveAccept = viewModel.httpClient.viewFriendRequestReceive(API.userToken!!)
-                    friendRequestsSendAccept = viewModel.httpClient.viewFriendRequestSend(API.userToken!!)
+                    friends = viewModel.httpClient.getFriendList(API.userToken!!)
                 }
 
-                for (request in friendRequestsReceiveAccept!!)
-                    if (request.status.equals("accepted"))
-                        allFriendRequestAccept.add(request.immatriculation)
+                log("friends")
+                log(friends!!)
 
-                for (request in friendRequestsSendAccept!!)
-                    if (request.status.equals("accepted"))
-                        allFriendRequestAccept.add(request.immatriculation)
+                // Convertissez la liste d'amis en JSON
+                val friendsJson = Json.encodeToString(friends)
+                log("friendsJson")
+                log(friendsJson!!)
 
+                // Ajoutez le JSON au Bundle
                 val bundle = Bundle().apply {
-                    putStringArrayList("allFriendRequestAccept", ArrayList(allFriendRequestAccept))
+                    putString("friendsJson", friendsJson)
                 }
+
+                // Naviguez vers le fragment de destination
                 findNavController().navigate(
                     R.id.action_MainFragment_to_FriendAcceptFragment,
                     bundle
                 )
             }
         }
+
 
         binding.verified.verifyButtonReceiving.setOnClickListener {
             viewModel.viewModelScope.launch {

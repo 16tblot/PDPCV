@@ -16,7 +16,8 @@ object API
         send_connection_request("send_connection_request"),
         get_all_connections("get_all_connections"),
         accept_connection("accept_connection"),
-        reject_connection("reject_connection")
+        reject_connection("reject_connection"),
+        get_friendlist("get_friendlist")
     }
 
     fun getUrl(request: String) : String
@@ -47,7 +48,7 @@ object API
     data class ContactUser(val sender_token: String, val receiver_immatriculation: String)
 
     @Serializable
-    data class ViewFriendRequest(val token: String)
+    data class SendUser(val token: String)
 
     //get_all_connections
     @Serializable
@@ -58,6 +59,12 @@ object API
 
     @Serializable
     data class AnswerConnection(val token: String, val target_immatriculation: String)
+
+    @Serializable
+    data class FriendInfo(val immatriculation: String, val phone: String)
+
+    @Serializable
+    data class Friend(val friend: List<FriendInfo>, val message: String)
 
     @Serializable
     data class CommonResponse(val message: String)

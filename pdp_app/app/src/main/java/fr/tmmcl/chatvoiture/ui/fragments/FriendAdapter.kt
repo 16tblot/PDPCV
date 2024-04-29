@@ -6,18 +6,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import fr.tmmcl.chatvoiture.API
 import fr.tmmcl.chatvoiture.AppViewModel
 import fr.tmmcl.chatvoiture.R
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
-class FriendAdapter(private val context: Context, private val friendRequestAccept: List<String>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
+class FriendAdapter(private val context: Context, private val friendsJson: String?) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
-    private val viewModel: AppViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(context.applicationContext as Application).create(AppViewModel::class.java)
-    }
+    private val friends: List<API.FriendInfo> = Json.decodeFromString<List<API.FriendInfo>>(friendsJson ?: "[]")
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val immatriculationTextView: TextView = itemView.findViewById(R.id.friend_accept_ima)
-        val phoneTextView: TextView = itemView.findViewById(R.id.friend_accept_ima)
+        val phoneTextView: TextView = itemView.findViewById(R.id.friend_accept_phone)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,12 +28,12 @@ class FriendAdapter(private val context: Context, private val friendRequestAccep
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val immatriculation = friendRequestAccept[position]
-        holder.immatriculationTextView.text = immatriculation
-        holder.phoneTextView.text = immatriculation //TODO : afficher le numero de tel
+        val friend = friends[position]
+        holder.immatriculationTextView.text = friend.immatriculation
+        holder.phoneTextView.text = friend.phone ?: "N/A" // Affiche "N/A" si le téléphone est null
     }
 
     override fun getItemCount(): Int {
-        return friendRequestAccept.size
+        return friends.size
     }
 }

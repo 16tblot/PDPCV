@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="70dp"
     android:layout_marginLeft="@dimen/short_margin"
     android:layout_marginRight="@dimen/short_margin"
     android:layout_marginTop="@dimen/short_margin"
@@ -44,8 +44,7 @@
         android:layout_marginRight="@dimen/short_margin"
         android:text="Oui"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/nop_button"
@@ -55,8 +54,7 @@
         android:layout_marginRight="@dimen/short_margin"
         android:text="Nop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/yes_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/yes_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
