@@ -171,20 +171,12 @@ class Main : Fragment() {
                     friends = viewModel.httpClient.getFriendList(API.userToken!!)
                 }
 
-                log("friends")
-                log(friends!!)
-
-                // Convertissez la liste d'amis en JSON
                 val friendsJson = Json.encodeToString(friends)
-                log("friendsJson")
-                log(friendsJson!!)
 
-                // Ajoutez le JSON au Bundle
                 val bundle = Bundle().apply {
                     putString("friendsJson", friendsJson)
                 }
 
-                // Naviguez vers le fragment de destination
                 findNavController().navigate(
                     R.id.action_MainFragment_to_FriendAcceptFragment,
                     bundle
